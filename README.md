@@ -1,30 +1,30 @@
-# Test PMP A4P — pack live
+# Test_PMP_A4P
 
-Ce pack contient une version opérationnelle du test PMP A4P prête pour GitHub Pages.
+Structure simple et autonome pour GitHub Pages.
+
+## Fichiers
+- `index.html`
+- `style.css`
+- `script.js`
+- `README.md`
+
+## Mise en ligne GitHub
+1. Créer un nouveau dépôt GitHub.
+2. Déposer ces 4 fichiers à la racine du dépôt.
+3. Aller dans **Settings > Pages**.
+4. Choisir **Deploy from a branch**.
+5. Sélectionner la branche `main` et le dossier `/root`.
+6. Enregistrer.
 
 ## Contenu
-- 136 questions intégrées directement dans le script
-- calcul des 8 dimensions mentales
-- génération de 3 profils mentaux
-- ligne visible MBTI inspiré → préférence motrice
-- rapport rédigé
-- radar mental
-- export JSON
-- impression PDF
+- 120 questions mentales
+- 16 questions cognitives
+- Calcul des 8 dimensions
+- 6 profils mentaux dérivés
+- Type cognitif inspiré MBTI
+- Conversion Action Types
+- Radar mental
+- Rapport narratif imprimable
 
-## Mise en ligne GitHub Pages
-1. Dézipper le fichier.
-2. Déposer tous les fichiers à la racine du dossier **Test_PMP_A4P** de votre dépôt.
-3. Vérifier que l’URL finale est bien :
-   `https://alexandregriffet-cmd.github.io/Test_PMP_A4P/`
-4. Supprimer les anciens fichiers avant de remettre ceux-ci.
-
-## Fichiers fournis
-- index.html
-- styles.css
-- script.js
-- logo-a4p.svg
-- favicon.svg
-- README.md
-
-Date de génération : 2026-03-12
+## Remarque
+Cette version est une base opérationnelle autonome. Les libellés, l’identité visuelle, le logo et le niveau de finesse du rapport peuvent être enrichis dans une itération suivante sans modifier la structure générale.
