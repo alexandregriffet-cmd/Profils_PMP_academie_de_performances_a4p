@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Test PMP A4P</title>
+  <meta name="description" content="Profil Mental de Performance A4P">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <header class="hero screen-only">
+    <div class="hero-top">
+      <img src="logo-a4p.svg" alt="A4P" class="logo">
+      <div>
+        <div class="eyebrow">Académie de Performances</div>
+        <h1>Test PMP A4P</h1>
+        <p class="subtitle">Profil Mental de Performance — version opérationnelle</p>
+      </div>
+    </div>
+    <p class="intro">
+      Outil complet d’évaluation mentale avec rapport détaillé, trois profils mentaux dominants,
+      traduction cognitive inspirée MBTI et correspondance vers une préférence motrice.
+    </p>
+    <div class="chips">
+      <span class="chip">136 questions</span>
+      <span class="chip">Rapport rédigé</span>
+      <span class="chip">3 profils mentaux</span>
+      <span class="chip">MBTI → Préférence motrice</span>
+    </div>
+    <div class="actions">
+      <button id="startBtn" class="btn primary">Commencer le test</button>
+      <button id="demoBtn" class="btn secondary">Voir une démo</button>
+    </div>
+  </header>
+
+  <section id="metaCard" class="card hidden">
+    <h2>Informations du joueur</h2>
+    <div class="grid two">
+      <label>Nom<input id="athleteName" type="text" placeholder="Ex. Lucas Martin"></label>
+      <label>Sport<input id="athleteSport" type="text" placeholder="Ex. Tennis"></label>
+      <label>Âge<input id="athleteAge" type="number" min="8" max="99" placeholder="Ex. 16"></label>
+      <label>Date<input id="assessmentDate" type="date"></label>
+      <label>Club / structure<input id="athleteClub" type="text" placeholder="Ex. Racing Club"></label>
+      <label>Évaluateur<input id="assessorName" type="text" placeholder="Ex. Alexandre Griffet"></label>
+    </div>
+    <div class="consent">
+      <input id="consentBox" type="checkbox">
+      <label for="consentBox">J’utilise cet outil comme support d’accompagnement. La ligne MBTI est une traduction inspirée, non un test MBTI officiel.</label>
+    </div>
+  </section>
+
+  <section id="testCard" class="card hidden">
+    <div class="test-head">
+      <div>
+        <h2 id="questionCounter">Question 1 / 136</h2>
+        <p id="dimensionBadge" class="badge">Activation</p>
+      </div>
+      <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
+    </div>
+    <div class="question-box">
+      <p id="questionText" class="question-text"></p>
+      <div class="scale-legend"><span>1 = Jamais</span><span>5 = Toujours</span></div>
+      <div id="scale" class="scale"></div>
+    </div>
+    <div class="nav">
+      <button id="prevBtn" class="btn secondary">Précédent</button>
+      <div class="nav-right">
+        <button id="saveBtn" class="btn secondary">Sauvegarder</button>
+        <button id="nextBtn" class="btn primary">Suivant</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="resultsCard" class="hidden">
+    <div class="card report-cover">
+      <div class="hero-top">
+        <img src="logo-a4p.svg" alt="A4P" class="logo small">
+        <div>
+          <div class="eyebrow">Rapport de restitution</div>
+          <h2>PMP A4P</h2>
+          <p class="subtitle">Profil Mental de Performance</p>
+        </div>
+      </div>
+      <p id="identityLine" class="muted"></p>
+      <div class="actions screen-only">
+        <button id="printBtn" class="btn primary">Imprimer / PDF</button>
+        <button id="exportJsonBtn" class="btn secondary">Exporter JSON</button>
+        <button id="restartBtn" class="btn secondary">Recommencer</button>
+      </div>
+    </div>
+
+    <div class="card highlight">
+      <div class="highlight-grid">
+        <div>
+          <div class="mini-label">Type cognitif inspiré MBTI</div>
+          <div id="mbtiTypeLine" class="highlight-value">—</div>
+        </div>
+        <div class="arrow">→</div>
+        <div>
+          <div class="mini-label">Préférence motrice</div>
+          <div id="motorCodeLine" class="highlight-value">—</div>
+        </div>
+      </div>
+      <p id="motorExplain" class="muted"></p>
+    </div>
+
+    <div class="grid two">
+      <div class="card">
+        <h3>Carte mentale PMP</h3>
+        <canvas id="radarCanvas" width="620" height="620"></canvas>
+      </div>
+      <div class="card">
+        <h3>Synthèse du profil</h3>
+        <div class="profile-box">
+          <div>
+            <div class="mini-label">Profil principal</div>
+            <div id="mainProfile" class="profile-main">—</div>
+          </div>
+          <div>
+            <div class="mini-label">Profil secondaire</div>
+            <div id="secondaryProfile" class="profile-sub">—</div>
+          </div>
+          <div>
+            <div class="mini-label">Profil tertiaire</div>
+            <div id="tertiaryProfile" class="profile-tertiary">—</div>
+          </div>
+        </div>
+        <div id="summaryText" class="narrative"></div>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="card">
+        <h3>Scores mentaux</h3>
+        <div id="scoreGrid" class="score-grid"></div>
+      </div>
+      <div class="card">
+        <h3>Axes cognitifs et motricité</h3>
+        <div id="preferenceGrid" class="score-grid two-col"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Portrait mental approfondi</h3>
+      <div id="portraitText" class="narrative"></div>
+    </div>
+
+    <div class="grid three">
+      <div class="card">
+        <h3>Forces mentales</h3>
+        <div id="strengthsText" class="narrative"></div>
+      </div>
+      <div class="card">
+        <h3>Fonctionnement sous pression</h3>
+        <div id="pressureText" class="narrative"></div>
+      </div>
+      <div class="card">
+        <h3>Profil d’apprentissage</h3>
+        <div id="learningText" class="narrative"></div>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="card">
+        <h3>Axes de progression</h3>
+        <div id="progressText" class="narrative"></div>
+      </div>
+      <div class="card">
+        <h3>Plan de progression mentale</h3>
+        <div id="planText" class="narrative"></div>
+      </div>
+    </div>
+
+    <div class="grid three">
+      <div class="card">
+        <h3>Lecture jeune</h3>
+        <div id="playerText" class="narrative"></div>
+      </div>
+      <div class="card">
+        <h3>Lecture parents</h3>
+        <div id="parentText" class="narrative"></div>
+      </div>
+      <div class="card">
+        <h3>Lecture coach</h3>
+        <div id="coachText" class="narrative"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Lecture Action Types</h3>
+      <div id="motorText" class="narrative"></div>
+    </div>
+
+    <div class="card">
+      <h3>Cadre d’utilisation</h3>
+      <p class="muted">
+        Ce rapport constitue un support d’évaluation fonctionnelle et de dialogue. La ligne MBTI affichée
+        correspond à une traduction inspirée d’axes cognitifs, non à un test MBTI officiel.
+      </p>
+    </div>
+  </section>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
